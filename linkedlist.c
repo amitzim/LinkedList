@@ -40,7 +40,7 @@ int add(LinkedList *lst, int data) {
 	return SUCCESS;
 }
 
-int remove(LinkedList *lst, int data) {
+int remove_link(LinkedList *lst, int data) {
 	int counter = 0;
 	Link *temp = lst->start;
 	while (temp != NULL) {
@@ -51,11 +51,6 @@ int remove(LinkedList *lst, int data) {
 				free(lst->start);
 				lst->start = temp;
 				continue;
-				/*lst->start = temp->next;
-				temp->prev = NULL;
-				counter++;
-				Link *temp = lst->start;
-				continue;*/
 			}
 			else {
 				Link *new_next = NULL;
@@ -100,13 +95,14 @@ void delete_list(LinkedList *self) {
 		free(temp->prev);
 	}
 	free(temp);
+	free(self);
 }
 
 int main() {
 	LinkedList *lst = (LinkedList *)calloc(1, sizeof(LinkedList));
 	lst->start = NULL;
 	lst->add = &add;
-	lst->remove = &remove;
+	lst->remove = &remove_link;
 	lst->to_string = &to_string;
 	lst->delete = &delete_list;
 
@@ -121,5 +117,6 @@ int main() {
 	printf("HI\n");
 	lst->to_string(lst);
 	lst->delete(lst);
+	//free(lst);
 	return 0;
 }
