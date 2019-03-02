@@ -2,34 +2,10 @@
 // CR:   1. I prefer using using 4 spaces instead of 1 tab (configurable in any text editor)
 // CR:   2. You should include the .sln .vcxproj .vcxproj.filters files so other pepole cloning the repo will be able to compile / add files to the solution. These are the files that used to configure how to compile the project (replaces the makefile), so you want to keep them.
 // CR:   3. You can add .gitignore file to make git ignore from the binaries in the solution directory.
-
+#include "linkedlist.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SUCCESS 1
-#define FAIL 0
-
-// CR: a space before the {
-// CR: Most pepole would call this ListNode
-typedef struct ListNode{
-	struct ListNode *prev;
-	struct ListNode *next;
-	int data;
-} ListNode;
-
-// CR: Normally this would be called ListHead
-typedef struct ListHead {
-	struct ListNode *start;
-    struct ListNode *last;
-	// CR: It is nice that you used this exercise to also experiment with OOP in C :)
-	//Functions pointers
-    //struct ListHead*(*list_init)();
-	int(*add)(struct ListHead *, int);
-	int(*remove)(struct ListHead *, int);
-    int(*size)(struct ListHead *);
-	void(*to_string)(struct ListHead *);
-	void(*delete)();
-} ListHead;
 
 int add(ListHead *lst, int data) {
 	// CR: Most pepole would expect you to use malloc here, but calloc is also great.
@@ -103,7 +79,7 @@ int remove_link(ListHead *lst, int data) {
 }
 
 
-void to_string(ListHead *lst) {
+void list_to_string(ListHead *lst) {
 	ListNode *temp = lst->start;
 	while (temp != NULL) {
 		printf("%d ", temp->data);
@@ -150,35 +126,9 @@ struct ListHead *list_init() {
     lst->add = &add;
     lst->remove = &remove_link;
     lst->size = &list_size;
-    lst->to_string = &to_string;
+    lst->to_string = &list_to_string;
     lst->delete = &list_destroy;
     return lst;
-}
-
-int main() {
-	// CR: I would have create a function to do that (list_init ?) aka a constructor for a list object.
-	ListHead *lst = list_init();
-	/*lst->start = NULL;
-	lst->add = &add;
-	lst->remove = &remove_link;
-	lst->to_string = &to_string;
-	lst->delete = &list_destroy;*/
-    printf("size at begining: %d\n", lst->size(lst));
-	for (int i = 1; i <= 20; i++) {
-		lst->add(lst, i);
-        lst->add(lst, 5);
-        //lst->remove(lst, i);
-        printf("interation %d => size is: %d\n", i, lst->size(lst));
-        lst->to_string(lst);
-		/*add(lst, 5);
-		add(lst, i);*/
-	}
-	lst->to_string(lst);
-	lst->remove(lst, 5);
-	printf("HI\n");
-	lst->to_string(lst);
-	lst->delete(lst);
-	return 0;
 }
 
 // CR: Looks great. Now, I would suggest you to read about the linked list implementation of linux kernel.
