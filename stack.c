@@ -34,9 +34,14 @@ int pop(Stack *my_stack)
     if (my_stack->head->start != my_stack->head->last) {
         my_stack->head->last = temp->prev;
         my_stack->head->last->next = NULL;
+        free(temp);
     }
-
-    free(temp);
+    else {
+        my_stack->head->last = NULL;
+        my_stack->head->start = NULL;
+        free(temp);
+    }
+    
     return data;  
 }
 
