@@ -4,3 +4,4 @@ Debug/*
 LinkedList/Debug/*
 LinkedList/x64/*
 LinkedList/.vs/*
+LinkedList/LinkedList.vcxproj.user
