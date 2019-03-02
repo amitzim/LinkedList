@@ -1,18 +1,22 @@
 #include "linkedlist.h"
 #include "stack.h"
+#include <stdio.h>
 
 void check_stack() {
     Stack *st = stack_init();
-    /*for (int i = 1; i <= 20; i++){
+    for (int i = 1; i <= 20; i++){
         st->push(st, i);
         printf("last element: %d\n", st->peek(st));
-    }*/
+    }
+    for (int i = -11; i <=20 ; i++){
+        printf("%d\n", st->pop(st));
+    }
     st->push(st, 1);
     st->push(st, 2);
     st->push(st, 3);
-    printf("%d", st->pop(st));
-    printf("%d", st->pop(st));
-    printf("%d", st->pop(st));
+    printf("%d\n", st->pop(st));
+    printf("%d\n", st->pop(st));
+    printf("%d\n", st->pop(st));
     st->stack_destroy(st);
 }
 
