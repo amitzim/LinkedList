@@ -97,12 +97,14 @@ void list_destroy(ListHead *self) {
         free(self);
         return;
     }
-	ListNode *temp = self->start;
-	while (temp->next != NULL) {
-		temp = temp->next;
-		free(temp->prev);
-	}
-	free(temp);
+    if (self->start != self->last){
+        ListNode *temp = self->start;
+        while (temp->next != NULL) {
+            temp = temp->next;
+            free(temp->prev);
+        }
+        free(temp);
+    }
 	free(self);
 }
 
