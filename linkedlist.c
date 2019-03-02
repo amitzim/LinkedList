@@ -26,6 +26,7 @@ typedef struct ListHead {
     //struct ListHead*(*list_init)();
 	int(*add)(struct ListHead *, int);
 	int(*remove)(struct ListHead *, int);
+    int(*size)(struct ListHead *);
 	void(*to_string)(struct ListHead *);
 	void(*delete)();
 } ListHead;
@@ -129,11 +130,26 @@ void list_destroy(ListHead *self) {
 	free(self);
 }
 
+int list_size(ListHead *lst) {
+    int counter = 0;
+    ListNode *temp = lst->start;
+    if (temp == NULL) {
+        return counter;
+    }
+    while (temp != NULL) {
+        counter++;
+        temp = temp->next;
+    }
+    return counter;
+}
+
+
 struct ListHead *list_init() {
     ListHead *lst = (ListHead *)calloc(1, sizeof(ListHead));
     lst->start = NULL;
     lst->add = &add;
     lst->remove = &remove_link;
+    lst->size = &list_size;
     lst->to_string = &to_string;
     lst->delete = &list_destroy;
     return lst;
@@ -147,10 +163,13 @@ int main() {
 	lst->remove = &remove_link;
 	lst->to_string = &to_string;
 	lst->delete = &list_destroy;*/
-
+    printf("size at begining: %d\n", lst->size(lst));
 	for (int i = 1; i <= 20; i++) {
 		lst->add(lst, i);
-        lst->remove(lst, i);
+        lst->add(lst, 5);
+        //lst->remove(lst, i);
+        printf("interation %d => size is: %d\n", i, lst->size(lst));
+        lst->to_string(lst);
 		/*add(lst, 5);
 		add(lst, i);*/
 	}
